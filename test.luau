@@ -7,4 +7,4 @@ local result = lightningcss:minify([[
     }
 ]])
 
-print(result)
+print(result) -- body>.asdf{background-color:#7b59e7}
