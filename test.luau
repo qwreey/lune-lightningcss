@@ -1,5 +1,5 @@
 local lightningcss = require("./")
-    .new("./target/release/liblune_lightningcss.so")
+    .new(require("@lune/process").args[1] or "./target/release/liblune_lightningcss.so")
 
 local result = lightningcss:minify([[
     body > .asdf {
