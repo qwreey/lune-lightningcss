@@ -12,7 +12,11 @@ pub struct MinifyResult {
 
 fn create_err(err: impl Display) -> MinifyResult {
     let err = format!("{err}").leak();
-    MinifyResult{len:err.len() as i32,ptr:err.as_ptr(), err:true}
+    MinifyResult {
+        len: err.len() as i32,
+        ptr: err.as_ptr(),
+        err: true,
+    }
 }
 
 #[no_mangle]
@@ -26,7 +30,10 @@ pub unsafe extern "C" fn minify(ptr: *const u8, len: i32) -> MinifyResult {
             if let Err(err) = stylesheet.minify(MinifyOptions::default()) {
                 return create_err(err);
             }
-            match stylesheet.to_css(PrinterOptions{ minify: true, ..Default::default() }) {
+            match stylesheet.to_css(PrinterOptions {
+                minify: true,
+                ..Default::default()
+            }) {
                 Ok(result) => {
                     let result_string = result.code.leak();
                     MinifyResult {
@@ -37,7 +44,7 @@ pub unsafe extern "C" fn minify(ptr: *const u8, len: i32) -> MinifyResult {
                 }
                 Err(err) => create_err(err),
             }
-        },
+        }
         Err(err) => create_err(err),
     }
 }
